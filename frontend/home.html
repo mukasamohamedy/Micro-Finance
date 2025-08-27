@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Microfinance Home</title>
+  <!-- Favicon -->
+   <link rel="icon" href="images/background.jpg" type="image/png">
+
+   <!-- SweetAlert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Font Awesome CSS  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+      }
+
+    /* Navbar Home underline */
+    .nav-link.active {
+      border-bottom: 3px solid #0077b6; /* blue bahari */
+      color: #0077b6 !important;
+    }
+    /* Hero Section */
+    .hero {
+      display: flex;
+      align-items: center;
+      min-height: 100vh;
+      gap: 2rem;
+    }
+    .hero-text {
+      max-width: 500px;
+    }
+    .btn-outline-success {
+      border-radius: 30px; /* rounded outline button */
+      font-weight: bold;
+    }
+    .hero-img {
+      background: url('Images/background.jpg') no-repeat center center/cover;
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+    }
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 20px;
+      }
+      .hero-text {
+        margin-top: 20px;
+      }
+      }
+      
+      .hero-img {
+        height: 470px; /* on mobile, picha ionekane vizuri */
+        border-radius: 10px;
+      }
+    /* About Section */
+    .about-section {
+     padding: 60px 0;
+     }
+
+   /* Heading ya kushoto */
+   .about-section h3 {
+   font-size: 2rem;
+   font-weight: 700;
+   color: #198754; /* kijani */
+   margin-bottom: 20px;
+    }
+
+   /* Picha */
+  .about-image img {
+  width: 80%;
+  border-radius: 15px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+  }
+
+/* Maelezo ya kushoto */
+.about-text {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+  margin-top: 15px;
+}
+
+/* Form container upande wa kulia */
+.form-container {
+  background: #f8f9fa;
+  border-radius: 15px;
+  margin-bottom: 130px;
+  padding: 25px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+  width: 80%;
+}
+
+/* Form heading */
+.form-container h4 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #198754;
+  margin-bottom: 20px;
+}
+
+/* Form input fields */
+.form-container .form-control {
+  border-radius: 8px;
+}
+
+/* Submit button */
+.form-container .btn-success {
+  border-radius: 8px;
+  padding: 10px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.form-container .btn-success:hover {
+  background-color: #146c43;
+}
+
+ /* Responsive tweaks */
+ @media (max-width: 767px) {
+  .about-section {
+    padding: 40px 0;
+  }
+  .about-section h3 {
+    text-align: center;
+    font-size: 1.8rem;
+  }
+  .about-image {
+    margin-bottom: 15px;
+  }
+  .about-text {
+    text-align: center;
+  }
+  .form-container {
+    padding: 20px;
+  }
+}
+
+
+@media (max-width: 576px) {
+    footer p {
+      font-size: 0.85rem;
+    }
+    footer h3 {
+      font-size: 1.2rem;
+    }
+    footer hr {
+      width: 40px !important;
+    }
+    footer .d-flex a {
+      font-size: 0.9rem;
+    }
+  }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-light shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-success" href="#">Loan Web</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link active fw-semibold" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-semibold" href="#">Huduma Zetu</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-semibold" href="#">Utendaji</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-semibold" href="#">Kuhusu Sisi</a>
+        </li>
+      </ul>
+      <div class="d-flex gap-2">
+        <a href="#" class="btn btn-outline-success">Ingia</a>
+        <a href="#" class="btn btn-outline-success">Jisajili</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero container py-5">
+  <div class="hero-text">
+    <h1 class="fw-bold mb-3  text-success">
+      Mikopo ya Haraka na Rahisi<br>Kwa Mahitaji Yako Ya Kifedha
+    </h1>
+    <p class="text-muted mb-4">
+      Huduma zetu za Mikopo zinakupa uzoefu rahisi na usio na usumbufu wa kukupa, 
+      zikiwa na lengo la kukupa fedha unazohitaji kwa wakati ili kukidhi mahitaji yako ya kifedha.
+    </p>
+    <a href="#" class="btn btn-outline-success px-4 py-2">Anza Sasa</a>
+  </div>
+  <div class="col hero-img ms-lg-5"></div>
+</section>
+
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- Huduma Zetu Section -->
+<section class="py-5 bg-light">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-5">Huduma Zetu</h2>
+    <div class="row g-4">
+
+  <!-- Mkopo Binafsi -->
+<div class="col-md-4">
+  <div class="card h-100 shadow-sm border-0 rounded-4">
+    <div class="card-body d-flex flex-column">
+      <div class="mb-3 d-flex justify-content-center">
+        <img src="images/Vector.png" alt="Mkopo Binafsi" class="img-fluid" style="width: 100px; height: 100px;">
+      </div>
+      <h5 class="card-title fw-bold text-center">Mkopo Binafsi</h5>
+      <p class="card-text text-muted flex-grow-1 text-center">
+        Mikopo ya binafsi huwapa wakopaji uhuru na urahisi wa kutumia fedha hizo kwa njia wanayopendelea.
+      </p>
+      <a href="#" class="btn btn-outline-success btn-sm mt-3 px-3 py-1 align-self-center">Jiunge Nasi</a>
+    </div>
+  </div>
+</div>
+
+
+      <!-- Mkopo wa Biashara -->
+<div class="col-md-4">
+  <div class="card h-100 shadow-sm border-0 rounded-3">
+    <div class="card-body d-flex flex-column">
+      <div class="mb-3 d-flex justify-content-center">
+        <img src="images/image.png" alt="Mkopo wa Biashara" class="img-fluid" style="width: 100px; height: 100px;">
+      </div>
+      <h5 class="card-title fw-bold text-center">Mkopo wa Biashara</h5>
+      <p class="card-text text-muted flex-grow-1 text-center">
+        Huduma za Mikopo ya Biashara hutoa msaada wa kifedha kwa biashara kwa madhumuni mbalimbali.
+      </p>
+      <a href="#" class="btn btn-outline-success btn-sm mt-3 px-3 py-1 align-self-center">Jiunge Nasi</a>
+    </div>
+  </div>
+</div>
+
+
+      <!-- Mkopo wa Elimu -->
+<div class="col-md-4">
+  <div class="card h-100 shadow-sm border-0 rounded-3">
+    <div class="card-body d-flex flex-column">
+      <div class="mb-3 d-flex justify-content-center">
+        <img src="images/graduation-hat.png" alt="Mkopo wa Elimu" class="img-fluid" style="width: 100px; height: 100px;">
+      </div>
+      <h5 class="card-title fw-bold text-center">Mkopo wa Elimu</h5>
+      <p class="card-text text-muted flex-grow-1 text-center">
+        Huduma za mikopo kwa wanafunzi wasio jeweza.
+      </p>
+      <a href="#" class="btn btn-outline-success btn-sm mt-3 px-3 py-1 align-self-center">Jiunge Nasi</a>
+    </div>
+  </div>
+</div>
+
+
+    </div>
+
+    <!-- Button ya Endelea -->
+    <div class="mt-5">
+      <a href="#" class="btn btn-outline-success btn-lg px-5">Endelea</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- Utendaji Wetu Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <!-- Heading -->
+    <h2 class="fw-bold text-center mb-3">Utendaji Wetu</h2>
+    <p class="text-muted text-center mb-5">
+      Huu ni mchakato wa jinsi unavyoweza kupata mkopo kwa ajili yako mwenyewe.
+    </p>
+
+    <!-- 1. Maombi -->
+    <div class="row align-items-center g-4 mb-5">
+      <div class="col-md-6 text-center">
+        <img src="images/image 5.png" style="border-radius: 20px;"
+             class="img-fluid rounded shadow" alt="Maombi ya Mkopo">
+      </div>
+      <div class="col-md-6 text-md-start text-center">
+        <h4 class="fw-bold mb-3">Maombi</h4>
+        <p class="text-muted">
+          Mkopo huwasilisha maombi ya mkopo kwa benki, iwe kwa njia ya moja kwa moja,mtandaoni,au kupitia nyinginezo.
+          Maombi hayo yanajumuisha taarifa binafsi na kifedha kama vile mapato,historia ya ajira,alama ya mkopo (credit score), na sababu ya kuomba mkopo huo.
+        </p>
+      </div>
+    </div>
+
+    <!-- 2. Nyaraka & Uhakiki -->
+    <div class="row align-items-center g-4 mb-5 flex-md-row-reverse">
+      <div class="col-md-6 text-center">
+        <img src="images/left_hand.png" style="border-radius: 20px;" 
+             class="img-fluid rounded shadow" alt="Uhifadhi wa Nyaraka">
+      </div>
+      <div class="col-md-6 text-md-start text-center">
+        <h4 class="fw-bold mb-3">Nyaraka na Uhakiki</h4>
+        <p class="text-muted">
+         Benki huomba nyaraka za kuunga mkono kutoka kwa mkopo,kama vile kitambulisho,taarifa za mapato,taarifa za benki,na maelezo ya dhamana
+         (ikiwa yanahitajika).Benki huhakiki taarifa zilizotolewa ili kutathimini uwezo wa mkopo kulipa mkopona sifa yake ya kukopeshwa.
+        </p>
+      </div>
+    </div>
+
+    <!-- 3. Tathimini ya Mikopo -->
+    <div class="row align-items-center g-4 mb-5">
+      <div class="col-md-6 text-center">
+        <img src="images/Card.png" style="border-radius: 20px;" 
+             class="img-fluid rounded shadow" alt="Tathmini ya Mikopo">
+      </div>
+      <div class="col-md-6 text-md-start text-center">
+        <h4 class="fw-bold mb-3">Tathmini ya Mikopo</h4>
+        <p class="text-muted">
+          Benki hufanya tathmini ya mkopo ili kutathmini uwezo wa mkopo kulipa mkopo na sifa yake ya kukopesheka.Mchakato huu unahusisha uchambuzi wa historia ya mkopo wa mkopo,utulivu wa mapato,uwiano wa deni kwa mapato,pamoja na vigezo vingene vinavyohusiana.
+        </p>
+      </div>
+    </div>
+
+    <!-- 4. Uidhinishaji wa Mikopo -->
+    <div class="row align-items-center g-4 mb-5 flex-md-row-reverse">
+      <div class="col-md-6 text-center">
+        <img src="images/Speech_bubble.png" style="border-radius: 20px;" 
+             class="img-fluid rounded shadow" alt="Uidhinishaji wa Mikopo">
+      </div>
+      <div class="col-md-6 text-md-start text-center">
+        <h4 class="fw-bold mb-3">Uidhinishaji wa Mkopo</h4>
+        <p class="text-muted">
+          Kama mkopo anakidhi vigezo vya benki vya kukopesheka na kupita katika tathmini ya mkopo,mkopo unakubaliwa.Benki huamua kiasi cha mkopo,riba,muda wa marejesho,pamaoja na ada zozote zinazohusiana.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Kuhusu Sisi Section -->
+<section class="about-section py-5">
+  <div class="container">
+    <div class="row g-4 align-items-center">
+      
+      <!-- Sehemu ya kushoto (heading + image + maelezo) -->
+      <div class="col-md-6 d-flex flex-column justify-content-center">
+        <h3 class="text-success fw-bold mb-3">Kuhusu Sisi</h3>
+        <div class="about-image mb-3">
+          <img src="images/Table.png" alt="Kuhusu Sisi" class="img-fluid shadow rounded">
+        </div>
+        <p class="about-text">
+          Loan Web - Mshiriki wako wa kifedha wa kuaminika kwa mkopo. Uidhinishaji wa haraka,viwango vya riba vinavyoshindana,na suluhisho za kibanafsi kukidhi mahitaji yako maalumu.
+          Tutakupa nguvu kufanikisha malengo yako ya kifedha. Omba mkopo mtandaoni leo!
+        </p>
+      </div>
+
+      <!-- Form upande wa kulia -->
+      <div class="col-md-6 d-flex align-items-center">
+        <div class="form-container w-100 bg-light p-4 rounded shadow-sm">
+          <h4 class="mb-3 text-success">Wasiliana Nasi</h4>
+          <form id="aboutForm">
+            <div class="mb-3">
+              <label for="name" class="form-label">Jina Lako</label>
+              <input type="text" class="form-control" id="name" placeholder="Ingiza jina lako">
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Namba ya Simu</label>
+              <input type="tel" class="form-control" id="phone" placeholder="Ingiza namba ya simu">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Barua Pepe</label>
+              <input type="email" class="form-control" id="email" placeholder="mfano@email.com">
+            </div>
+            <button type="submit" class="btn btn-success w-100">
+              <i class="fas fa-paper-plane me-2"></i>Tuma
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="bg-dark text-white py-5">
+  <div class="container">
+    <div class="row text-center text-md-start">
+      
+      <!-- Loan Web Info -->
+      <div class="col-12 col-md-4 mb-4">
+        <h3>Loan <span style="color: rgb(22,222,79)">Web</span></h3>
+        <p class="text-white" style="font-size: 0.9rem;">
+          Dhamira yetu ni kuwawezesha watu binafsi na biashara kwa kuwapatia rasilimali za kifedha wanazohitaji ili kufanikisha malengo yao.
+        </p>
+        <div class="d-flex justify-content-center justify-content-md-start gap-3 mt-3">
+          <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      
+      <!-- Huduma Zetu -->
+      <div class="col-12 col-md-4 mb-4">
+        <h3 class="mb-3">HUDUMA ZETU</h3>
+        <hr class="bg-light mx-auto mx-md-0" style="width: 50px; height: 2px; opacity: 0.7;">
+        <p class="mb-1"><i class="fas fa-user me-2"></i> Mkopo Binafsi</p>
+        <p class="mb-1"><i class="fas fa-briefcase me-2"></i> Mkopo wa Biashara</p>
+        <p class="mb-1"><i class="fas fa-graduation-cap me-2"></i> Mkopo wa Elimu</p>
+      </div>
+      
+      <!-- Mawasiliano -->
+      <div class="col-12 col-md-4 mb-4">
+        <h3 class="mb-3">MAWASILIANO</h3>
+        <hr class="bg-light mx-auto mx-md-0" style="width: 50px; height: 2px; opacity: 0.7;">
+        <p class="mb-1"><i class="fas fa-phone me-2"></i> +255 700000000</p>
+        <p class="mb-1"><i class="fas fa-envelope me-2"></i> loanweb@gmail.com</p>
+        <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i> Address line-1, Address line-2,<br> Mkoa, Wilaya</p>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+  <script>
+   document.getElementById("aboutForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  let name = document.getElementById("name").value.trim();
+  let phone = document.getElementById("phone").value.trim();
+  let email = document.getElementById("email").value.trim();
+
+  // Validation
+  if(name === "" || phone === "" || email === ""){
+    Swal.fire({
+      icon: "error",
+      title: "Samahani!",
+      text: "Tafadhali jaza sehemu zote kabla ya kutuma."
+    });
+    return;
+  }
+
+  let phoneRegex = /^[0-9]{10,15}$/;
+  if(!phoneRegex.test(phone)){
+    Swal.fire({
+      icon: "warning",
+      title: "Namba ya simu sio sahihi!",
+      text: "Tafadhali ingiza namba ya simu halali."
+    });
+    return;
+  }
+
+  let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(!emailRegex.test(email)){
+    Swal.fire({
+      icon: "warning",
+      title: "Barua pepe sio sahihi!",
+      text: "Tafadhali ingiza barua pepe halali (mfano: user@email.com)."
+    });
+    return;
+  }
+
+  // Success Message
+  Swal.fire({
+    icon: "success",
+    title: "Umefanikiwa!",
+    text: "Asante kwa kuwasiliana nasi, tutakujibu hivi karibuni.",
+    confirmButtonColor: "#198754"
+  });
+
+  // Reset form
+  document.getElementById("aboutForm").reset();
+});
+</script>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
