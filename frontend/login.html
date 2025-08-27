@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title></title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #d9d9d9;
+    }
+
+    .container {
+      width: 80%;
+      max-width: 1000px;
+      margin: 50px auto;
+      background: linear-gradient(to right, #eef8f7, #ffffff);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 40px;
+      border-radius: 10px;
+    }
+
+    .login-section {
+      width: 45%;
+    }
+
+    .login-section h2 {
+      margin-bottom: 30px;
+      color: #113f45;
+    }
+
+    .form-box {
+      background-color: white;
+      padding: 25px 20px;
+      border-radius: 12px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.05);
+    }
+
+    .form-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+    }
+
+    .form-box button {
+      width: 100px;
+      height: 40px;
+      padding: 5px;
+      background-color: #113f45;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      margin-top: 5%;
+      margin-left: 40%;
+      cursor: pointer;
+      font-size: 16px;
+      justify-content: center;
+      
+    }
+
+    .form-box .links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .form-box .links a {
+      text-decoration: none;
+      color: #113f45;
+    }
+
+    .image-section {
+      width: 45%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-section img {
+      width: 80%;
+      max-width: 300px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .login-section, .image-section {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .image-section img {
+        max-width: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- container sectoion -->
+  <div class="container">
+    <div class="login-section">
+      <h2></h2>
+      <div class="form-box">
+        <form>
+          <label>Jina Kamili</label>
+          <input type="text" placeholder="Ingiza Jina Kamili">
+          <label>Nyuri</label>
+          <input type="password" placeholder="Ingiza Nyuri">
+          <button type="submit">Ingia</button>
+          <div class="links">
+            <a href="user_reset_password.html">Umesahau Nyuri</a>
+            <a href="register.html">Sajili hapa</a>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="image-section">
+      <img src="d1.png" alt="Login Icon">
+    </div>
+  </div>
+
+</body>
+</html>
