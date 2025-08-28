@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #77dd77, #d4f1d4);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            width: 300px;
+            text-align: center;
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+        }
+        .login-container input[type="email"],
+        .login-container input[type="password"] {
+            width: 90%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 25px;
+            background-color: #f0f8ff;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        .login-container a {
+            display: block;
+            margin: 10px 0;
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            background-color: #1a73e8;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .login-container button:hover {
+            background-color: #1666c1;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Jisajili</h2>
+        <form action="admin_login.html" method="POST">
+            <input type="email" name="email" placeholder="Barua pepe">
+            <input type="password" name="password" placeholder="Nenosiri">
+            <a href="reset_password.html">Umesahau Nenosiri?</a>
+            <button type="submit">Jisajili</button>
+        </form>
+    </div>
+</body>
+</html>
