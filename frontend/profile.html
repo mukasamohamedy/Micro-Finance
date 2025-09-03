@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .profile-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .profile-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-header h2 {
+      margin: 10px 0;
+      color: #444;
+    }
+
+    .profile-pic {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-pic img {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 3px solid #007bff;
+      margin-bottom: 10px;
+    }
+
+    .profile-form label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .profile-form input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .profile-form button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .profile-form button:hover {
+      background: #0056b3;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #28a745;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: 0.3s;
+      z-index: 2000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 15px;
+      text-decoration: none;
+      color: #007bff;
+      font-size: 14px;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <div class="profile-header">
+      <h2>Edit Profile</h2>
+      <p>Update your personal information below</p>
+    </div>
+
+    <div class="profile-pic">
+      <img id="profilePreview" src="https://via.placeholder.com/90" alt="Profile Picture">
+      <input type="file" id="profileImage" accept="image/*">
+    </div>
+
+    <form id="profileForm" class="profile-form">
+      <label>Full Name</label>
+      <input type="text" id="name" value="Juma" required>
+
+      <label>Email</label>
+      <input type="email" id="email" value="juma@example.com" required>
+
+      <label>Phone</label>
+      <input type="text" id="phone" value="+123456789" required>
+
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Enter new password">
+
+      <label>Confirm Password</label>
+      <input type="password" id="confirmPassword" placeholder="Confirm new password">
+      <button type="submit">Save Changes</button>
+    </form>
+
+    <a href="user_dashboard.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast">Profile updated successfully!</div>
+
+  <script>
+    // Image preview
+    document.getElementById("profileImage").addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById("profilePreview").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Toast function
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 3000);
+    }
+
+    // Profile form
+    document.getElementById("profileForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      // Here you’d usually send data to backend via fetch/ajax
+      showToast("Profile updated successfully!");
+    });
+  </script>
+</body>
+</html>

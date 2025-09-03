@@ -81,6 +81,11 @@
       margin: 0;
       font-size: 22px;
     }
+
+    /* User Menu */
+    .user-menu {
+      position: relative;
+    }
     .user-info {
       display: flex;
       align-items: center;
@@ -92,6 +97,32 @@
       font-size: 24px;
       color: #aaa;
       margin-right: 10px;
+    }
+    .dropdown-menu {
+      position: absolute;
+      top: 120%;
+      right: 0;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: none;
+      flex-direction: column;
+      min-width: 150px;
+      z-index: 1000;
+    }
+    .dropdown-menu a {
+      padding: 10px 15px;
+      display: block;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+    .dropdown-menu a:hover {
+      background: #f4f4f4;
+    }
+    .dropdown-menu.show {
+      display: flex;
     }
 
     /* Sections */
@@ -223,11 +254,17 @@
         <span class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></span>
         <div class="header-left"><h2>Welcome Juma</h2></div>
         <div class="header-right">
-          <span class="user-info">
-            <i class="fas fa-user-circle user-avatar"></i>
-            <span>Juma</span>
-            <i class="fas fa-chevron-down dropdown-icon"></i>
-          </span>
+          <div class="user-menu">
+            <span class="user-info" id="userMenuToggle">
+              <i class="fas fa-user-circle user-avatar"></i>
+              <span>Juma</span>
+              <i class="fas fa-chevron-down dropdown-icon"></i>
+            </span>
+            <div class="dropdown-menu" id="userDropdown">
+              <a href="profile.html">Profile</a>
+              <a href="login.html" id="logoutBtn">Logout</a>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -343,6 +380,29 @@
       e.preventDefault();
       showToast("Payment submitted successfully!");
       e.target.reset();
+    });
+
+    // Dropdown toggle
+    const userMenuToggle = document.getElementById("userMenuToggle");
+    const userDropdown = document.getElementById("userDropdown");
+
+    userMenuToggle.addEventListener("click", () => {
+      userDropdown.classList.toggle("show");
+    });
+
+    // Close dropdown if clicked outside
+    window.addEventListener("click", (e) => {
+      if (!userMenuToggle.contains(e.target) && !userDropdown.contains(e.target)) {
+        userDropdown.classList.remove("show");
+      }
+    });
+
+    // Logout action
+    document.getElementById("logoutBtn").addEventListener("click", (e) => {
+      e.preventDefault();
+      showToast("You have logged out!");
+      // Redirect to login page or clear session
+     window.location.href = "login.html";
     });
   </script>
 </body>
