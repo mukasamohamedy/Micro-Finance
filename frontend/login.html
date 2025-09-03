@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,21 +119,22 @@
     <div class="login-section">
       <h2></h2>
       <div class="form-box">
-        <form>
+        <form method="post">
+          {% csrf_token %}
           <label>Jina Kamili</label>
-          <input type="text" placeholder="Ingiza Jina Kamili">
+          <input type="text" name="fullname" placeholder="Ingiza Jina Kamili">
           <label>Nyuri</label>
-          <input type="password" placeholder="Ingiza Nyuri">
+          <input type="password" name="password" placeholder="Ingiza Nyuri">
           <button type="submit">Ingia</button>
           <div class="links">
             <a href="user_reset_password.html">Umesahau Nyuri</a>
-            <a href="register.html">Sajili hapa</a>
+            <a href="register">Sajili hapa</a>
           </div>
         </form>
       </div>
     </div>
     <div class="image-section">
-      <img src="d1.png" alt="Login Icon">
+      <img src="{% static 'Images/d1.png' %}" alt="Login Icon">
     </div>
   </div>
 
