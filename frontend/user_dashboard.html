@@ -1,409 +1,423 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>User Dashboard</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f7f9;
-      margin: 0;
-      padding: 0;
-      color: #333;
-    }
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f7f9;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
 
-    .dashboard-container {
-      display: flex;
-      min-height: 100vh;
-    }
+      .dashboard-container {
+        display: flex;
+        min-height: 100vh;
+      }
 
-    /* Sidebar */
-    .sidebar {
-      width: 250px;
-      background-color: #fff;
-      padding: 20px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-    }
-    .sidebar.hidden {
-      transform: translateX(-100%);
-    }
-    .sidebar-header h3 {
-      color: #444;
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
-    .sidebar-nav ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .nav-item {
-      margin-bottom: 15px;
-    }
-    .nav-link {
-      display: flex;
-      align-items: center;
-      padding: 12px 15px;
-      text-decoration: none;
-      color: #777;
-      font-size: 16px;
-      border-radius: 8px;
-      transition: background-color 0.2s, color 0.2s;
-    }
-    .nav-link:hover, .nav-link.active {
-      background-color: #e6f7ff;
-      color: #007bff;
-    }
-    .nav-link i {
-      margin-right: 15px;
-      font-size: 18px;
-    }
+      /* Sidebar */
+      .sidebar {
+        width: 250px;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+      }
+      .sidebar.hidden {
+        transform: translateX(-100%);
+      }
+      .sidebar-header h3 {
+        color: #444;
+        font-size: 18px;
+        margin-bottom: 30px;
+      }
+      .sidebar-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .nav-item {
+        margin-bottom: 15px;
+      }
+      .nav-link {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        text-decoration: none;
+        color: #777;
+        font-size: 16px;
+        border-radius: 8px;
+        transition: background-color 0.2s, color 0.2s;
+      }
+      .nav-link:hover, .nav-link.active {
+        background-color: #e6f7ff;
+        color: #007bff;
+      }
+      .nav-link i {
+        margin-right: 15px;
+        font-size: 18px;
+      }
 
-    /* Main Content */
-    .main-content {
-      flex-grow: 1;
-      padding: 20px;
-    }
-    .main-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #fff;
-      padding: 15px 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      margin-bottom: 20px;
-    }
-    .header-left h2 {
-      margin: 0;
-      font-size: 22px;
-    }
-
-    /* User Menu */
-    .user-menu {
-      position: relative;
-    }
-    .user-info {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      color: #555;
-      font-size: 16px;
-    }
-    .user-avatar {
-      font-size: 24px;
-      color: #aaa;
-      margin-right: 10px;
-    }
-    .dropdown-menu {
-      position: absolute;
-      top: 120%;
-      right: 0;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      display: none;
-      flex-direction: column;
-      min-width: 150px;
-      z-index: 1000;
-    }
-    .dropdown-menu a {
-      padding: 10px 15px;
-      display: block;
-      text-decoration: none;
-      color: #333;
-      font-size: 14px;
-      transition: background 0.2s;
-    }
-    .dropdown-menu a:hover {
-      background: #f4f4f4;
-    }
-    .dropdown-menu.show {
-      display: flex;
-    }
-
-    /* Sections */
-    .content-section {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      display: none;
-    }
-    .content-section.active {
-      display: block;
-    }
-    .section-header h3 {
-      margin: 0 0 15px;
-      font-size: 20px;
-      color: #333;
-    }
-
-    /* Table */
-    .table-container { overflow-x: auto; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-    thead th {
-      font-weight: bold;
-      color: #666;
-      padding: 10px;
-      border-bottom: 1px solid #eee;
-      font-size: 12px;
-    }
-    tbody td {
-      padding: 12px;
-      border-bottom: 1px solid #f0f0f0;
-    }
-    tr:hover { background-color: #f9f9f9; }
-
-    .status-pill {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-    .status-on-track { background: #e8f5e9; color: #2e7d32; }
-    .status-late { background: #ffebee; color: #c62828; }
-    .status-paid { background: #e1f5fe; color: #0277bd; }
-
-    /* Forms */
-    form label { display: block; margin: 10px 0 5px; font-weight: bold; }
-    form input, form select, form textarea {
-      width: 100%; padding: 10px; border: 1px solid #ccc;
-      border-radius: 5px; font-size: 14px;
-    }
-    form button {
-      margin-top: 15px;
-      padding: 10px 15px;
-      border: none;
-      background-color: #007bff;
-      color: white;
-      font-size: 14px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    form button:hover { background-color: #0056b3; }
-
-    /* Notifications */
-    .notification-item {
-      padding: 12px;
-      border-bottom: 1px solid #eee;
-    }
-
-    /* Toast */
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #28a745;
-      color: white;
-      padding: 15px 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      z-index: 2000;
-    }
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Responsive */
-    @media(max-width: 768px) {
-      .sidebar { position: absolute; top:0; left:0; height:100%; z-index:1000; }
-      .menu-toggle {
-        display:block;
+      /* Main Content */
+      .main-content {
+        flex-grow: 1;
+        padding: 20px;
+      }
+      .main-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
+      }
+      .header-left h2 {
+        margin: 0;
         font-size: 22px;
+      }
+
+      /* User Menu */
+      .user-menu {
+        position: relative;
+      }
+      .user-info {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        color: #555;
+        font-size: 16px;
+      }
+      .user-avatar {
+        font-size: 24px;
+        color: #aaa;
+        margin-right: 10px;
+      }
+      .dropdown-menu {
+        position: absolute;
+        top: 120%;
+        right: 0;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        display: none;
+        flex-direction: column;
+        min-width: 150px;
+        z-index: 1000;
+      }
+      .dropdown-menu a {
+        padding: 10px 15px;
+        display: block;
+        text-decoration: none;
+        color: #333;
+        font-size: 14px;
+        transition: background 0.2s;
+      }
+      .dropdown-menu a:hover {
+        background: #f4f4f4;
+      }
+      .dropdown-menu.show {
+        display: flex;
+      }
+
+      /* Sections */
+      .content-section {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        display: none;
+      }
+      .content-section.active {
+        display: block;
+      }
+      .section-header h3 {
+        margin: 0 0 15px;
+        font-size: 20px;
+        color: #333;
+      }
+
+      /* Table */
+      .table-container { overflow-x: auto; }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      thead th {
+        font-weight: bold;
+        color: #666;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        font-size: 12px;
+      }
+      tbody td {
+        padding: 12px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+      tr:hover { background-color: #f9f9f9; }
+
+      .status-pill {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+      .status-on-track { background: #e8f5e9; color: #2e7d32; }
+      .status-late { background: #ffebee; color: #c62828; }
+      .status-paid { background: #e1f5fe; color: #0277bd; }
+
+      /* Forms */
+      form label { display: block; margin: 10px 0 5px; font-weight: bold; }
+      form input, form select, form textarea {
+        width: 100%; padding: 10px; border: 1px solid #ccc;
+        border-radius: 5px; font-size: 14px;
+      }
+      form button {
+        margin-top: 15px;
+        padding: 10px 15px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        font-size: 14px;
+        border-radius: 5px;
         cursor: pointer;
       }
-    }
-    @media(min-width: 769px) {
-      .menu-toggle { display:none; }
-    }
-  </style>
-</head>
-<body>
-  <div class="dashboard-container">
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <h3>User Dashboard</h3>
-      </div>
-      <nav class="sidebar-nav">
-        <ul>
-          <li class="nav-item"><a href="#" class="nav-link active" data-section="home"><i class="fas fa-home"></i> Home</a></li>
-          <li class="nav-item"><a href="#" class="nav-link" data-section="loan"><i class="fas fa-credit-card"></i> My Loan</a></li>
-          <li class="nav-item"><a href="#" class="nav-link" data-section="payment"><i class="fas fa-money-check-alt"></i> Payment</a></li>
-          <li class="nav-item"><a href="#" class="nav-link" data-section="notification"><i class="fas fa-bell"></i> Notification</a></li>
-        </ul>
-      </nav>
-    </aside>
+      form button:hover { background-color: #0056b3; }
 
-    <!-- Main -->
-    <main class="main-content">
-      <header class="main-header">
-        <span class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></span>
-        <div class="header-left"><h2>Welcome Juma</h2></div>
-        <div class="header-right">
-          <div class="user-menu">
-            <span class="user-info" id="userMenuToggle">
-              <i class="fas fa-user-circle user-avatar"></i>
-              <span>Juma</span>
-              <i class="fas fa-chevron-down dropdown-icon"></i>
-            </span>
-            <div class="dropdown-menu" id="userDropdown">
-              <a href="profile.html">Profile</a>
-              <a href="login.html" id="logoutBtn">Logout</a>
+      /* Notifications */
+      .notification-item {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+      }
+
+      /* Toast */
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #28a745;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 2000;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Responsive */
+      @media(max-width: 768px) {
+        .sidebar { position: absolute; top:0; left:0; height:100%; z-index:1000; }
+        .menu-toggle {
+          display:block;
+          font-size: 22px;
+          cursor: pointer;
+        }
+      }
+      @media(min-width: 769px) {
+        .menu-toggle { display:none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <h3>User Dashboard</h3>
+        </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li class="nav-item"><a href="#" class="nav-link active" data-section="home"><i class="fas fa-home"></i> Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link" data-section="loan"><i class="fas fa-credit-card"></i> My Loan</a></li>
+            <li class="nav-item"><a href="#" class="nav-link" data-section="payment"><i class="fas fa-money-check-alt"></i> Payment</a></li>
+            <li class="nav-item"><a href="#" class="nav-link" data-section="notification"><i class="fas fa-bell"></i> Notification</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main -->
+      <main class="main-content">
+        <header class="main-header">
+          <span class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></span>
+          <div class="header-left"><h2>Welcome {{ user.username }}</h2></div>
+          <div class="header-right">
+            <div class="user-menu">
+              <span class="user-info" id="userMenuToggle">
+                <i class="fas fa-user-circle user-avatar"></i>
+                <span>{{ user.username }}</span>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+              </span>
+              <div class="dropdown-menu" id="userDropdown">
+                <a href="{% url 'profile' %}">Profile</a> 
+                <a href="{% url 'logout' %}" id="logoutBtn">Logout</a>
+              </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <!-- Sections -->
-      <section id="home" class="content-section active">
-        <div class="section-header"><h3>Active Loans</h3></div>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th><th>Loan Type</th><th>Amount</th><th>Issued</th><th>Due</th><th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>3</td><td>Personal Loan</td><td>2,500,000</td><td>May 10 2025</td><td>Jul 10 2025</td>
-                <td><span class="status-pill status-on-track">On track</span></td>
-              </tr>
-              <tr>
-                <td>2</td><td>Business Loan</td><td>2,500,000</td><td>May 10 2025</td><td>Jul 10 2025</td>
-                <td><span class="status-pill status-late">Late</span></td>
-              </tr>
-              <tr>
-                <td>1</td><td>Education Loan</td><td>2,500,000</td><td>May 10 2025</td><td>Jul 10 2025</td>
-                <td><span class="status-pill status-paid">Paid</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+        <!-- Sections -->
+        <section id="home" class="content-section active">
+          <div class="section-header"><h3>Active Loans</h3></div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th><th>Loan Type</th><th>Amount</th><th>Issued</th><th>Due</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>3</td><td>Personal Loan</td><td>2,500,000</td><td>May 10 2025</td><td>Jul 10 2025</td>
+                  <td><span class="status-pill status-on-track">On track</span></td>
+                </tr>
+                <tr>
+                  <td>2</td><td>Business Loan</td><td>2,500,000</td><td>May 10 2025</td><td>Jul 10 2025</td>
+                  <td><span class="status-pill status-late">Late</span></td>
+                </tr>
+                <tr>
+                  <td>1</td><td>Education Loan</td><td>2,500,000</td><td>May 10 2025</td><td>Jul 10 2025</td>
+                  <td><span class="status-pill status-paid">Paid</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
 
-      <section id="loan" class="content-section">
-        <div class="section-header"><h3>Loan Application</h3></div>
-        <form id="loanForm">
+        <section id="loan" class="content-section">
+          <div class="section-header"><h3>Loan Application</h3></div>
+            <form id="loanForm" method="post" action="{% url 'apply_loan' %}">
+          {% csrf_token %}
+
           <label>Loan Type</label>
-          <select required><option>Personal</option><option>Business</option><option>Education</option></select>
+          <select name="loan_type" required>
+            {% for type in loan_types %}
+              <option value="{{ type.id }}">{{ type.name }}</option>
+            {% endfor %}
+          </select>
+
           <label>Amount</label>
-          <input type="number" placeholder="Enter amount" required/>
+          <input type="number" name="amount" placeholder="Enter amount" required />
+
           <label>Duration (Months)</label>
-          <input type="number" placeholder="Enter duration" required/>
+          <input type="number" name="duration" placeholder="Enter duration" required />
+
           <label>Purpose</label>
-          <textarea rows="3" placeholder="Why do you need the loan?" required></textarea>
+          <textarea name="purpose" rows="3" placeholder="Why do you need the loan?" required></textarea>
+
           <button type="submit">Submit Application</button>
         </form>
-      </section>
 
-      <section id="payment" class="content-section">
-        <div class="section-header"><h3>Loan Repayment</h3></div>
-        <form id="paymentForm">
-          <label>Select Loan</label>
-          <select required><option>Loan 3 - Personal</option><option>Loan 2 - Business</option></select>
-          <label>Payment Amount</label>
-          <input type="number" placeholder="Enter repayment amount" required/>
-          <label>Payment Date</label>
-          <input type="date" required/>
-          <label>Payment Method</label>
-          <select required><option>Bank Transfer</option><option>Mobile Money</option><option>Card</option></select>
-          <button type="submit">Make Payment</button>
-        </form>
-      </section>
+        </section>
 
-      <section id="notification" class="content-section">
-        <div class="section-header"><h3>Notifications</h3></div>
-        <div class="notification-item">Loan 3 is on track, next payment due July 10, 2025.</div>
-        <div class="notification-item">Loan 2 is late. Please make payment immediately.</div>
-        <div class="notification-item">Loan 1 has been fully paid. Congratulations!</div>
-      </section>
-    </main>
-  </div>
+        <section id="payment" class="content-section">
+          <div class="section-header"><h3>Loan Repayment</h3></div>
+          <form id="paymentForm">
+            <label>Select Loan</label>
+            <select required><option>Loan 3 - Personal</option><option>Loan 2 - Business</option></select>
+            <label>Payment Amount</label>
+            <input type="number" placeholder="Enter repayment amount" required/>
+            <label>Payment Date</label>
+            <input type="date" required/>
+            <label>Payment Method</label>
+            <select required><option>Bank Transfer</option><option>Mobile Money</option><option>Card</option></select>
+            <button type="submit">Make Payment</button>
+          </form>
+        </section>
 
-  <!-- Toast -->
-  <div id="toast" class="toast">Success!</div>
+        <section id="notification" class="content-section">
+          <div class="section-header"><h3>Notifications</h3></div>
+          <div class="notification-item">Loan 3 is on track, next payment due July 10, 2025.</div>
+          <div class="notification-item">Loan 2 is late. Please make payment immediately.</div>
+          <div class="notification-item">Loan 1 has been fully paid. Congratulations!</div>
+        </section>
+      </main>
+    </div>
 
-  <script>
-    // Sidebar toggle for mobile
-    function toggleSidebar() {
-      document.getElementById("sidebar").classList.toggle("hidden");
-    }
+    <!-- Toast -->
+    <div id="toast" class="toast">Success!</div>
 
-    // Navigation
-    const links = document.querySelectorAll(".nav-link");
-    const sections = document.querySelectorAll(".content-section");
-
-    links.forEach(link => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        links.forEach(l => l.classList.remove("active"));
-        sections.forEach(s => s.classList.remove("active"));
-        link.classList.add("active");
-        const target = document.getElementById(link.dataset.section);
-        if (target) target.classList.add("active");
-        if (window.innerWidth <= 768) toggleSidebar();
-      });
-    });
-
-    // Toast function
-    function showToast(message) {
-      const toast = document.getElementById("toast");
-      toast.textContent = message;
-      toast.classList.add("show");
-      setTimeout(() => { toast.classList.remove("show"); }, 3000);
-    }
-
-    // Loan Form
-    document.getElementById("loanForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      showToast("Loan application submitted successfully!");
-      e.target.reset();
-    });
-
-    // Payment Form
-    document.getElementById("paymentForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      showToast("Payment submitted successfully!");
-      e.target.reset();
-    });
-
-    // Dropdown toggle
-    const userMenuToggle = document.getElementById("userMenuToggle");
-    const userDropdown = document.getElementById("userDropdown");
-
-    userMenuToggle.addEventListener("click", () => {
-      userDropdown.classList.toggle("show");
-    });
-
-    // Close dropdown if clicked outside
-    window.addEventListener("click", (e) => {
-      if (!userMenuToggle.contains(e.target) && !userDropdown.contains(e.target)) {
-        userDropdown.classList.remove("show");
+    <script>
+      // Sidebar toggle for mobile
+      function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle("hidden");
       }
-    });
 
-    // Logout action
-    document.getElementById("logoutBtn").addEventListener("click", (e) => {
-      e.preventDefault();
-      showToast("You have logged out!");
-      // Redirect to login page or clear session
-     window.location.href = "login.html";
-    });
-  </script>
-</body>
-</html>
+      // Navigation
+      const links = document.querySelectorAll(".nav-link");
+      const sections = document.querySelectorAll(".content-section");
+
+      links.forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          links.forEach(l => l.classList.remove("active"));
+          sections.forEach(s => s.classList.remove("active"));
+          link.classList.add("active");
+          const target = document.getElementById(link.dataset.section);
+          if (target) target.classList.add("active");
+          if (window.innerWidth <= 768) toggleSidebar();
+        });
+      });
+
+      // Toast function
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+        setTimeout(() => { toast.classList.remove("show"); }, 3000);
+      }
+
+      // Loan Form
+      document.getElementById("loanForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        showToast("Loan application submitted successfully!");
+        e.target.reset();
+      });
+
+      // Payment Form
+      document.getElementById("paymentForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        showToast("Payment submitted successfully!");
+        e.target.reset();
+      });
+
+      // Dropdown toggle
+      const userMenuToggle = document.getElementById("userMenuToggle");
+      const userDropdown = document.getElementById("userDropdown");
+
+      userMenuToggle.addEventListener("click", () => {
+        userDropdown.classList.toggle("show");
+      });
+
+      // Close dropdown if clicked outside
+      window.addEventListener("click", (e) => {
+        if (!userMenuToggle.contains(e.target) && !userDropdown.contains(e.target)) {
+          userDropdown.classList.remove("show");
+        }
+      });
+
+      // Logout action
+      document.getElementById("logoutBtn").addEventListener("click", (e) => {
+        e.preventDefault();
+        showToast("You have logged out!");
+        // Redirect to login page or clear session
+      window.location.href = "{% url 'login' %}";
+      });
+    </script>
+  </body>
+  </html>

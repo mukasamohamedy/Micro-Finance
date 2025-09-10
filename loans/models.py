@@ -1,65 +1,59 @@
 from django.db import models
+from django.conf import settings
 
-# Create your models here.
-# class LoanType(models.Model):
-#     loan_type_id = models.AutoField(primary_key=True)
-#     name = models.CharField(max_length=255)
-#     description = models.TextField(blank=True, null=True)
-#     interest_rate = models.DecimalField(max_digits=5, decimal_places=2)
+User = settings.AUTH_USER_MODEL
 
-#     def __str__(self):
-#         return self.name
-    
+class LoanType(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField(blank=True, null=True)
+    interest_rate = models.DecimalField(max_digits=5, decimal_places=2)
 
-
-# class ApplicationLoan(models.Model):
-#     loan_id = models.AutoField(primary_key=True)
-#     amount = models.DecimalField(max_digits=12, decimal_places=2)
-#     duration_months = models.PositiveIntegerField()
-#     status = models.CharField(max_length=50, choices=[
-#         ("Pending", "Pending"),
-#         ("Approved", "Approved"),
-#         ("Rejected", "Rejected"),
-#         ("Completed", "Completed"),
-#     ])
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="loans")
-#     loan_type = models.ForeignKey(LoanType, on_delete=models.CASCADE, related_name="applications")
-
-#     def __str__(self):
-#         return f"Loan {self.loan_id} - {self.user.full_name}"
+    def __str__(self):
+        return f"{self.name} ({self.interest_rate}%)"
 
 
-# class Repayment(models.Model):
-#     repayment_id = models.AutoField(primary_key=True)
-#     payment_date = models.DateField()
-#     amount_paid = models.DecimalField(max_digits=12, decimal_places=2)
-#     balance_remaining = models.DecimalField(max_digits=12, decimal_places=2)
-#     loan = models.ForeignKey(ApplicationLoan, on_delete=models.CASCADE, related_name="repayments")
+class LoanApplication(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+        ('paid', 'Paid'),
+    ]
 
-#     def __str__(self):
-#         return f"Repayment {self.repayment_id} - Loan {self.loan.loan_id}"
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    loan_type = models.ForeignKey(LoanType, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    duration_months = models.IntegerField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    applied_at = models.DateTimeField(auto_now_add=True)
 
-
-# class Admin(models.Model):
-#     admin_id = models.AutoField(primary_key=True)
-#     action_type = models.CharField(max_length=100)
-#     action_note = models.TextField(blank=True, null=True)
-#     action_date = models.DateTimeField(auto_now_add=True)
-#     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-#     loan = models.ForeignKey(ApplicationLoan, on_delete=models.SET_NULL, null=True, blank=True)
-
-#     def __str__(self):
-#         return f"Admin {self.admin_id} - {self.action_type}"
+    def __str__(self):
+        return f"Loan {self.id} - {self.user.username} - {self.status}"
 
 
-# class Message(models.Model):
-#     message_id = models.AutoField(primary_key=True)
-#     subject = models.CharField(max_length=255)
-#     message = models.TextField()
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="messages")
+class Repayment(models.Model):
+    loan = models.ForeignKey(LoanApplication, on_delete=models.CASCADE, related_name="repayments")
+    payment_date = models.DateField(auto_now_add=True)
+    amount_paid = models.DecimalField(max_digits=12, decimal_places=2)
+    balance_remaining = models.DecimalField(max_digits=12, decimal_places=2)
 
-#     def __str__(self):
-#         return f"Message {self.message_id} from {self.user.username}"
+    def __str__(self):
+        return f"Repayment {self.id} for Loan {self.loan.id}"
 
 
-# 
+class AdminAction(models.Model):
+    ACTION_CHOICES = [
+        ('approve', 'Approve Loan'),
+        ('reject', 'Reject Loan'),
+        ('delete', 'Delete Loan'),
+        ('update', 'Update Loan'),
+    ]
+
+    loan = models.ForeignKey(LoanApplication, on_delete=models.CASCADE)
+    admin = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_staff': True})
+    action_type = models.CharField(max_length=20, choices=ACTION_CHOICES)
+    action_note = models.TextField(blank=True, null=True)
+    action_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.admin.username} - {self.action_type} - Loan {self.loan.id}"

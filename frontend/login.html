@@ -117,12 +117,16 @@
   <!-- container sectoion -->
   <div class="container">
     <div class="login-section">
-      <h2></h2>
+    {% for message in messages %}
+      <div class="alert alert-info">
+        {{ message }}
+      </div>
+    {% endfor %}
       <div class="form-box">
-        <form method="post">
+        <form action="{% url 'login' %}" method="post">
           {% csrf_token %}
           <label>Jina Kamili</label>
-          <input type="text" name="fullname" placeholder="Ingiza Jina Kamili">
+          <input type="text" name="username" placeholder="Ingiza Jina Kamili">
           <label>Nyuri</label>
           <input type="password" name="password" placeholder="Ingiza Nyuri">
           <button type="submit">Ingia</button>
